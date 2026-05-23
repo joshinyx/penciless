@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>penciless — Settings</title>
+  <!-- Apply theme before paint to avoid flash -->
+  <script>
+    try {
+      const s = JSON.parse(localStorage.getItem("penciless-settings") || "{}");
+      document.documentElement.setAttribute("data-theme", s.theme || "dark");
+    } catch {}
+  </script>
+  <link rel="stylesheet" href="/src/settings.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <img src="/logo-mono.png" width="26" height="26" />
+      <span class="app-name">penciless</span>
+      <span class="sep-dot">·</span>
+      <span data-i18n="title">Settings</span>
+      <button id="btn-kofi" title="Support on Ko-fi">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 8h1a4 4 0 0 1 0 8h-1"/>
+          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/>
+          <line x1="6" x2="6" y1="2" y2="4"/>
+          <line x1="10" x2="10" y1="2" y2="4"/>
+          <line x1="14" x2="14" y1="2" y2="4"/>
+        </svg>
+      </button>
+    </header>
+
+    <section>
+      <h2 data-i18n="sAppearance">Appearance</h2>
+
+      <div class="row">
+        <span data-i18n="sTheme">Theme</span>
+        <div class="pill-group" id="theme-group">
+          <button data-theme="dark"  data-i18n="sDark">Dark</button>
+          <button data-theme="light" data-i18n="sLight">Light</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <span data-i18n="sLanguage">Language</span>
+        <div class="pill-group" id="lang-group">
+          <button data-lang="en">English</button>
+          <button data-lang="es">Español</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n="sShortcuts">Keyboard shortcuts</h2>
+      <div class="sc-list">
+        <div class="sc-row" data-action="pen">
+          <span data-i18n="sPen">Pen</span>
+          <button class="key-cap">P</button>
+        </div>
+        <div class="sc-row" data-action="brush">
+          <span data-i18n="sBrush">Brush</span>
+          <button class="key-cap">B</button>
+        </div>
+        <div class="sc-row" data-action="eraser">
+          <span data-i18n="sEraser">Eraser</span>
+          <button class="key-cap">E</button>
+        </div>
+        <div class="sc-row" data-action="shapes">
+          <span data-i18n="sShapes">Shapes</span>
+          <button class="key-cap">S</button>
+        </div>
+        <div class="sc-row" data-action="colorPicker">
+          <span data-i18n="sColor">Color</span>
+          <button class="key-cap">C</button>
+        </div>
+        <div class="sc-row sc-fixed">
+          <span data-i18n="sUndo">Undo</span>
+          <kbd>Ctrl+Z</kbd>
+        </div>
+        <div class="sc-row sc-fixed">
+          <span data-i18n="sRedo">Redo</span>
+          <kbd>Ctrl+Shift+Z</kbd>
+        </div>
+        <div class="sc-row sc-fixed">
+          <span data-i18n="sClear">Clear all</span>
+          <kbd>Delete</kbd>
+        </div>
+        <div class="sc-row sc-fixed">
+          <span data-i18n="sToggle">Toggle overlay</span>
+          <kbd>Alt+Shift</kbd>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n="sCursorSection">Custom cursor</h2>
+      <div class="cursor-wrap">
+        <div class="cursor-preview" id="cursor-preview"></div>
+        <div class="cursor-meta">
+          <span id="cursor-label" data-i18n="sCursorDefault">Default</span>
+          <div class="cursor-btns">
+            <button id="btn-cursor-pick" data-i18n="sCursorPick">Choose image</button>
+            <button id="btn-cursor-reset" disabled data-i18n="sCursorReset">Reset</button>
+          </div>
+          <p class="hint" data-i18n="sCursorHint">PNG recommended · resized to 32×32</p>
+        </div>
+      </div>
+      <input type="file" id="cursor-file" accept="image/*" hidden />
+    </section>
+
+<button id="btn-reset-all" data-i18n="sResetAll">Reset to defaults</button>
+  </div>
+
+  <script type="module" src="/src/settings.ts"></script>
+</body>
+</html>

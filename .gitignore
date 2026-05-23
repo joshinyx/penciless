@@ -1,0 +1,16 @@
+
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/
+
+.env
+.env.local
+.env.*.local
+
+.DS_Store
+Thumbs.db
+*.suo
+.vscode/settings.json
+
+CLAUDE.md
