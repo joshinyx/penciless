@@ -1,0 +1,323 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #1a1a1a;
+  --surface:     #242424;
+  --border:      rgba(255, 255, 255, 0.09);
+  --text:        rgba(255, 255, 255, 0.88);
+  --text-dim:    rgba(255, 255, 255, 0.42);
+  --text-label:  rgba(255, 255, 255, 0.60);
+  --btn-bg:      rgba(255, 255, 255, 0.07);
+  --btn-hover:   rgba(255, 255, 255, 0.12);
+  --pill-active-bg:     rgba(99, 102, 241, 0.22);
+  --pill-active-border: rgba(99, 102, 241, 0.55);
+  --pill-active-text:   rgba(99, 102, 241, 1);
+  --key-bg:      rgba(255, 255, 255, 0.07);
+  --key-border:  rgba(255, 255, 255, 0.13);
+  --key-text:    rgba(255, 255, 255, 0.80);
+  --record-bg:   rgba(99, 102, 241, 0.15);
+  --record-border: rgba(99, 102, 241, 0.55);
+  --conflict-border: rgba(239, 68, 68, 0.6);
+  --conflict-text: #f87171;
+}
+
+:root[data-theme="light"] {
+  --bg:          #f2f2f2;
+  --surface:     #ffffff;
+  --border:      rgba(0, 0, 0, 0.09);
+  --text:        rgba(0, 0, 0, 0.88);
+  --text-dim:    rgba(0, 0, 0, 0.40);
+  --text-label:  rgba(0, 0, 0, 0.58);
+  --btn-bg:      rgba(0, 0, 0, 0.05);
+  --btn-hover:   rgba(0, 0, 0, 0.09);
+  --pill-active-bg:     rgba(99, 102, 241, 0.12);
+  --pill-active-border: rgba(99, 102, 241, 0.45);
+  --pill-active-text:   rgba(79, 82, 221, 1);
+  --key-bg:      rgba(0, 0, 0, 0.05);
+  --key-border:  rgba(0, 0, 0, 0.13);
+  --key-text:    rgba(0, 0, 0, 0.75);
+  --record-bg:   rgba(99, 102, 241, 0.10);
+  --record-border: rgba(99, 102, 241, 0.45);
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+}
+
+#app {
+  padding: 18px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+header img {
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+:root[data-theme="light"] header img {
+  filter: invert(1);
+}
+
+.app-name {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.2px;
+}
+
+.sep-dot {
+  color: var(--text-dim);
+}
+
+header > span:last-of-type {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+#btn-kofi {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 2px;
+  color: #ff5e5b;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 140ms;
+  flex-shrink: 0;
+}
+
+#btn-kofi:hover {
+  opacity: 1;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+h2 {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--text-dim);
+  padding-bottom: 2px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+
+.row > span {
+  color: var(--text-label);
+  font-size: 13px;
+}
+
+.pill-group {
+  display: flex;
+  gap: 4px;
+}
+
+.pill-group button {
+  padding: 4px 11px;
+  background: var(--btn-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-label);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms, color 120ms;
+}
+
+.pill-group button:hover {
+  background: var(--btn-hover);
+}
+
+.pill-group button.active {
+  background: var(--pill-active-bg);
+  border-color: var(--pill-active-border);
+  color: var(--pill-active-text);
+}
+
+.sc-list {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  transition: background 120ms;
+}
+
+.sc-row:last-child {
+  border-bottom: none;
+}
+
+.sc-row:not(.sc-fixed):hover {
+  background: var(--btn-bg);
+}
+
+.sc-row > span {
+  font-size: 13px;
+  color: var(--text-label);
+}
+
+.sc-fixed > span {
+  color: var(--text-dim);
+}
+
+.key-cap {
+  min-width: 52px;
+  height: 24px;
+  padding: 0 8px;
+  background: var(--key-bg);
+  border: 1px solid var(--key-border);
+  border-radius: 5px;
+  color: var(--key-text);
+  font-family: "Consolas", "SF Mono", monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms, color 120ms;
+  font-weight: 600;
+}
+
+.key-cap:hover {
+  background: var(--btn-hover);
+}
+
+.key-cap.recording {
+  background: var(--record-bg);
+  border-color: var(--record-border);
+  color: var(--pill-active-text);
+  animation: blink 900ms ease infinite;
+}
+
+.key-cap.conflict {
+  border-color: var(--conflict-border);
+  color: var(--conflict-text);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+kbd {
+  font-family: "Consolas", "SF Mono", monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  background: var(--key-bg);
+  border: 1px solid var(--key-border);
+  border-radius: 5px;
+  padding: 3px 8px;
+}
+
+.cursor-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.cursor-preview {
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  flex-shrink: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--btn-bg);
+}
+
+.cursor-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.cursor-meta > span {
+  font-size: 12px;
+  color: var(--text-label);
+}
+
+.cursor-btns {
+  display: flex;
+  gap: 5px;
+}
+
+.cursor-btns button {
+  padding: 5px 10px;
+  background: var(--btn-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 120ms;
+}
+
+.cursor-btns button:hover:not(:disabled) {
+  background: var(--btn-hover);
+}
+
+.cursor-btns button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.hint {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+#btn-reset-all {
+  width: 100%;
+  padding: 9px;
+  background: transparent;
+  border: 1px solid var(--conflict-border);
+  border-radius: 9px;
+  color: var(--conflict-text);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 120ms;
+}
+
+#btn-reset-all:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
