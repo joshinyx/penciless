@@ -14,3 +14,10 @@ Thumbs.db
 .vscode/settings.json
 
 CLAUDE.md
+
+*.pfx
+*.pem
+*.key
+*.p12
+*.crt
+*.cer
