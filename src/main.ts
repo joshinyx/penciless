@@ -48,13 +48,13 @@ function applyTooltips(lang: string) {
   });
 }
 
-const SHAPE_SVG: Record<ShapeType, string> = {
-  rect:     `<rect width="18" height="18" x="3" y="3" rx="2"/>`,
-  circle:   `<circle cx="12" cy="12" r="10"/>`,
-  diamond:  `<path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z"/>`,
-  triangle: `<path d="M13.73 4a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/>`,
-  hexagon:  `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>`,
-  star:     `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
+const SHAPE_SVG: Record<ShapeType, { outline: string; fill: string }> = {
+  rect:     { outline: `<path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200Z"/>`, fill: `<path d="M232,56V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Z"/>` },
+  circle:   { outline: `<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"/>`, fill: `<path d="M232,128A104,104,0,1,1,128,24,104.13,104.13,0,0,1,232,128Z"/>` },
+  diamond:  { outline: `<path d="M235.33,116.72,139.28,20.66a16,16,0,0,0-22.56,0l-96,96.06a16,16,0,0,0,0,22.56l96.05,96.06h0a16,16,0,0,0,22.56,0l96.05-96.06a16,16,0,0,0,0-22.56ZM128,224h0L32,128,128,32,224,128Z"/>`, fill: `<path d="M240,128a15.85,15.85,0,0,1-4.67,11.28l-96.05,96.06a16,16,0,0,1-22.56,0h0l-96-96.06a16,16,0,0,1,0-22.56l96.05-96.06a16,16,0,0,1,22.56,0l96.05,96.06A15.85,15.85,0,0,1,240,128Z"/>` },
+  triangle: { outline: `<path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.34,24.34,0,0,0,40.55,224h174.9a24.34,24.34,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8Z"/>`, fill: `<path d="M236.78,211.81A24.34,24.34,0,0,1,215.45,224H40.55a24.34,24.34,0,0,1-21.33-12.19,23.51,23.51,0,0,1,0-23.72L106.65,36.22a24.76,24.76,0,0,1,42.7,0L236.8,188.09A23.51,23.51,0,0,1,236.78,211.81Z"/>` },
+  hexagon:  { outline: `<path d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM216,175.82,128,224,40,175.82V80.18L128,32h0l88,48.17Z"/>`, fill: `<path d="M232,80.18v95.64a16,16,0,0,1-8.32,14l-88,48.17a15.88,15.88,0,0,1-15.36,0l-88-48.17a16,16,0,0,1-8.32-14V80.18a16,16,0,0,1,8.32-14l88-48.17a15.88,15.88,0,0,1,15.36,0l88,48.17A16,16,0,0,1,232,80.18Z"/>` },
+  star:     { outline: `<path d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z"/>`, fill: `<path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"/>` },
 };
 
 let currentTool: Tool = "pen";
@@ -79,7 +79,7 @@ let defaultCursor = "crosshair";
     const s = loadSettings();
     if (!s.cursorDataUrl) {
       customCursor = defaultCursor;
-      canvasBg.style.cursor = customCursor;
+      enforceCursor();
     }
   };
   img.src = "/penciless-cursor.png";
@@ -123,13 +123,18 @@ window.addEventListener("resize", () => {
 });
 resizeCanvases();
 
+function enforceCursor() {
+  canvasBg.style.cursor = customCursor;
+  document.documentElement.style.cursor = customCursor;
+}
+
 function applySettings(s: AppSettings) {
   document.documentElement.setAttribute("data-theme", s.theme);
   shortcuts = { ...DEFAULT_SHORTCUTS, ...s.shortcuts };
   customCursor = s.cursorDataUrl
     ? `url("${s.cursorDataUrl}") 16 16, crosshair`
     : defaultCursor;
-  canvasBg.style.cursor = customCursor;
+  enforceCursor();
   applyTooltips(s.language);
 }
 
@@ -386,7 +391,17 @@ listen<boolean>("alt-state", (event) => {
   isPassthrough = event.payload;
   toolbar.classList.toggle("passthrough", isPassthrough);
   if (isPassthrough) closeColorPopup();
+  else enforceCursor();
 });
+
+window.addEventListener("focus", enforceCursor);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Alt") { e.preventDefault(); enforceCursor(); }
+});
+document.addEventListener("keyup", (e) => {
+  if (e.key === "Alt") enforceCursor();
+});
+document.addEventListener("pointermove", enforceCursor);
 
 listen("toggle-annotating", () => {});
 
@@ -423,7 +438,7 @@ window.addEventListener("keydown", (e) => {
     } else {
       const order: ShapeType[] = ["rect", "circle", "diamond", "triangle", "hexagon", "star"];
       currentShape = order[(order.indexOf(currentShape) + 1) % order.length];
-      shapeIcon.innerHTML = SHAPE_SVG[currentShape];
+      updateShapeIcon(currentShape);
       document.querySelectorAll<HTMLElement>(".shape-opt").forEach(b =>
         b.classList.toggle("active", b.dataset.shape === currentShape)
       );
@@ -501,7 +516,13 @@ document.querySelectorAll<HTMLButtonElement>(".tool[data-tool]").forEach((btn) =
 });
 
 const shapeMenu = document.getElementById("shape-menu")!;
-const shapeIcon = document.getElementById("shape-icon")!;
+const shapeIconOutline = document.getElementById("shape-icon-outline")!;
+const shapeIconFill    = document.getElementById("shape-icon-fill")!;
+
+function updateShapeIcon(shape: ShapeType) {
+  shapeIconOutline.innerHTML = SHAPE_SVG[shape].outline;
+  shapeIconFill.innerHTML    = SHAPE_SVG[shape].fill;
+}
 const shapeBtn  = document.getElementById("shape-btn")!;
 
 document.querySelectorAll<HTMLButtonElement>(".shape-opt").forEach((btn) => {
@@ -509,7 +530,7 @@ document.querySelectorAll<HTMLButtonElement>(".shape-opt").forEach((btn) => {
     e.stopPropagation();
     currentShape = btn.dataset.shape as ShapeType;
     shapeMenu.hidden = true;
-    shapeIcon.innerHTML = SHAPE_SVG[currentShape];
+    updateShapeIcon(currentShape);
     document.querySelectorAll(".shape-opt").forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
   });

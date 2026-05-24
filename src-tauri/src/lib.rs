@@ -53,11 +53,56 @@ fn start_alt_monitor(app_handle: tauri::AppHandle) {
     });
 }
 
-fn mono_icon() -> tauri::image::Image<'static> {
+fn tray_icon() -> tauri::image::Image<'static> {
     let bytes = include_bytes!("../icons/tray-32.png");
     let decoded = image::load_from_memory(bytes).unwrap().into_rgba8();
     let (w, h) = decoded.dimensions();
     tauri::image::Image::new_owned(decoded.into_raw(), w, h)
+}
+
+fn window_icon() -> tauri::image::Image<'static> {
+    let bytes = include_bytes!("../icons/icon.ico");
+    let decoded = image::load_from_memory(bytes).unwrap().into_rgba8();
+    let (w, h) = decoded.dimensions();
+    tauri::image::Image::new_owned(decoded.into_raw(), w, h)
+}
+
+#[cfg(target_os = "windows")]
+fn apply_window_composition(hwnd: isize) {
+    #[link(name = "user32")]
+    extern "system" {
+        fn GetWindowLongW(hwnd: isize, n_index: i32) -> i32;
+        fn SetWindowLongW(hwnd: isize, n_index: i32, dw_new_long: i32) -> i32;
+        fn SetWindowPos(
+            hwnd: isize, hwnd_insert_after: isize,
+            x: i32, y: i32, cx: i32, cy: i32, u_flags: u32,
+        ) -> i32;
+    }
+    #[link(name = "dwmapi")]
+    extern "system" {
+        fn DwmSetWindowAttribute(
+            hwnd: isize, dw_attribute: u32,
+            pv_attribute: *const i32, cb_attribute: u32,
+        ) -> i32;
+    }
+    const GWL_EXSTYLE: i32 = -20;
+    const WS_EX_NOREDIRECTIONBITMAP: i32 = 0x00200000;
+    const SWP_FLAGS: u32 = 0x0001 | 0x0002 | 0x0004 | 0x0020;
+    const DWMWA_TRANSITIONS_FORCEDISABLED: u32 = 3;
+    const DWMWA_DISALLOW_PEEK: u32 = 11;
+    const DWMWA_EXCLUDED_FROM_PEEK: u32 = 12;
+    const DWMWA_SYSTEMBACKDROP_TYPE: u32 = 38;
+    unsafe {
+        let ex = GetWindowLongW(hwnd, GWL_EXSTYLE);
+        SetWindowLongW(hwnd, GWL_EXSTYLE, ex | WS_EX_NOREDIRECTIONBITMAP);
+        SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_FLAGS);
+        let one: i32 = 1;
+        let zero: i32 = 0;
+        DwmSetWindowAttribute(hwnd, DWMWA_TRANSITIONS_FORCEDISABLED, &one, 4);
+        DwmSetWindowAttribute(hwnd, DWMWA_DISALLOW_PEEK, &one, 4);
+        DwmSetWindowAttribute(hwnd, DWMWA_EXCLUDED_FROM_PEEK, &one, 4);
+        DwmSetWindowAttribute(hwnd, DWMWA_SYSTEMBACKDROP_TYPE, &zero, 4);
+    }
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -79,13 +124,20 @@ pub fn run() {
         .setup(|app| {
             start_alt_monitor(app.handle().clone());
 
+            #[cfg(target_os = "windows")]
+            if let Some(win) = app.get_webview_window("main") {
+                if let Ok(hwnd) = win.hwnd() {
+                    apply_window_composition(hwnd.0 as isize);
+                }
+            }
+
             let settings = MenuItem::with_id(app, "settings", "Settings", true, None::<&str>)?;
             let quit     = MenuItem::with_id(app, "quit",     "Quit penciless", true, None::<&str>)?;
             let menu     = Menu::with_items(app, &[&settings, &quit])?;
 
             TrayIconBuilder::with_id("main")
                 .menu(&menu)
-                .icon(mono_icon())
+                .icon(tray_icon())
                 .tooltip("penciless")
                 .on_tray_icon_event(|tray, event| {
                     if let TrayIconEvent::Click {
@@ -117,7 +169,7 @@ pub fn run() {
                                 .center()
                                 .build()
                                 {
-                                    let _ = win.set_icon(mono_icon());
+                                    let _ = win.set_icon(window_icon());
                                 }
                             }
                         }
