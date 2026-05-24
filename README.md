@@ -115,4 +115,8 @@ All shortcuts except the last three are configurable from the Settings window.
 
 ## License
 
-MIT
+GPL-3.0
+
+## About
+
+Built by [Josh Bernal](https://joshiny.dev) at [Euxora Studio](https://euxora.net).
