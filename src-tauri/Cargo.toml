@@ -1,6 +1,6 @@
 [package]
 name = "penciless"
-version = "0.1.0"
+version = "1.0.0"
 description = "Screen annotation overlay"
 authors = ["Euxora Studio"]
 edition = "2021"
