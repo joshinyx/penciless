@@ -211,6 +211,15 @@ button {
   color: var(--btn-text-active);
 }
 
+.tool .icon-fill,
+.shape-opt .icon-fill { display: none; }
+
+.tool.active .icon-outline,
+.shape-opt.active .icon-outline { display: none; }
+
+.tool.active .icon-fill,
+.shape-opt.active .icon-fill { display: block; }
+
 .shape-wrapper {
   position: relative;
 }
