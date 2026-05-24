@@ -7,26 +7,26 @@
 ╚═╝     ╚══════╝╚═╝  ╚═══╝ ╚═════╝╚═╝╚══════╝╚══════╝╚══════╝╚══════╝
 ```
 
-> _draw on anything — leave no trace._
+> _draw on anything - leave no trace._
 
 ---
 
 ## Overview
 
-Penciless is a screen annotation overlay for Windows built with Tauri v2 and TypeScript. It sits as a transparent, always-on-top, decoration-less canvas over your entire screen so you can draw on top of anything — presentations, videos, code, whatever's on screen.
+Penciless is a screen annotation overlay for Windows built with Tauri v2 and TypeScript. It sits as a transparent, always-on-top, decoration-less canvas over your entire screen so you can draw on top of anything: presentations, videos, code, whatever's on screen.
 
 ---
 
 ## Features
 
-- **Pen** — Pressure-simulated freehand strokes via `perfect-freehand`
-- **Brush** — Soft, wide brush strokes with smoothing
-- **Eraser** — Circular eraser with live cursor preview; independent size from drawing tools
-- **Shapes** — Rectangle, circle, diamond, triangle, hexagon, star
-- **Color picker** — Full HSV picker with recent colors history and hex input
-- **Undo / Redo** — Snapshot-based history (up to 10 steps)
-- **Passthrough mode** — `Alt+Shift` toggles mouse passthrough so you can interact with windows underneath
-- **Settings** — Theme (dark/light), language (English/Spanish), custom cursor, configurable keyboard shortcuts
+- **Pen** › Pressure-simulated freehand strokes via `perfect-freehand`
+- **Brush** › Soft, wide brush strokes with smoothing
+- **Eraser** › Circular eraser with live cursor preview; independent size from drawing tools
+- **Shapes** › Rectangle, circle, diamond, triangle, hexagon, star
+- **Color picker** › Full HSV picker with recent colors history and hex input
+- **Undo / Redo** › Snapshot-based history (up to 10 steps)
+- **Passthrough mode** › `Alt+Shift` toggles mouse passthrough so you can interact with windows underneath
+- **Settings** › Theme (dark/light), language (English/Spanish), custom cursor, configurable keyboard shortcuts
 
 ---
 
@@ -62,8 +62,8 @@ settings.html        Settings entry point
 
 Two canvases are layered on top of each other:
 
-- **`canvas-bg`** — persistent surface where committed strokes live
-- **`canvas-fg`** — live preview layer, cleared after each stroke commits
+- **`canvas-bg`** › persistent surface where committed strokes live
+- **`canvas-fg`** › live preview layer, cleared after each stroke commits
 
 Settings are stored in `localStorage` and synced to the overlay in real time via Tauri's event bus (`settings-changed`).
 
