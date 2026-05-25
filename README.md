@@ -110,4 +110,4 @@ GPL-3.0
 
 ## About
 
-Built by [Josh Bernal](https://joshiny.dev) at [Euxora Studio](https://euxora.net).
+Built by [Josh Bernal](https://joshiny.dev) at [Euxora](https://euxora.net).
