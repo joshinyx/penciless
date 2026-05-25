@@ -1,4 +1,5 @@
 import { listen } from "@tauri-apps/api/event";
+import { invoke } from "@tauri-apps/api/core";
 import { getStroke } from "perfect-freehand";
 import { animate } from "motion";
 import type { AppSettings } from "./settings";
@@ -403,7 +404,13 @@ document.addEventListener("keyup", (e) => {
 });
 document.addEventListener("pointermove", enforceCursor);
 
-listen("toggle-annotating", () => {});
+listen("toggle-annotating", async () => {
+  isPassthrough = !isPassthrough;
+  await invoke("set_passthrough", { enabled: isPassthrough });
+  toolbar.classList.toggle("passthrough", isPassthrough);
+  if (isPassthrough) closeColorPopup();
+  else enforceCursor();
+});
 
 function matchShortcut(e: KeyboardEvent, shortcut: string): boolean {
   const parts = shortcut.toLowerCase().split("+");

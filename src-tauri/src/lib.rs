@@ -3,7 +3,6 @@ use tauri::{
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     Emitter, Manager, Runtime,
 };
-use tauri_plugin_global_shortcut::ShortcutState;
 
 #[tauri::command]
 fn set_passthrough<R: Runtime>(window: tauri::Window<R>, enabled: bool) -> Result<(), String> {
@@ -108,19 +107,6 @@ fn apply_window_composition(hwnd: isize) {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
-        .plugin(
-            tauri_plugin_global_shortcut::Builder::new()
-                .with_shortcut("Alt+A")
-                .expect("invalid shortcut")
-                .with_handler(|app, _shortcut, event| {
-                    if event.state == ShortcutState::Pressed {
-                        if let Some(win) = app.get_webview_window("main") {
-                            let _ = win.emit("toggle-annotating", ());
-                        }
-                    }
-                })
-                .build(),
-        )
         .setup(|app| {
             start_alt_monitor(app.handle().clone());
 
@@ -137,6 +123,7 @@ pub fn run() {
 
             TrayIconBuilder::with_id("main")
                 .menu(&menu)
+                .menu_on_left_click(false)
                 .icon(tray_icon())
                 .tooltip("penciless")
                 .on_tray_icon_event(|tray, event| {
@@ -147,6 +134,7 @@ pub fn run() {
                     } = event
                     {
                         if let Some(win) = tray.app_handle().get_webview_window("main") {
+                            let _ = win.set_focus();
                             let _ = win.emit("toggle-annotating", ());
                         }
                     }
