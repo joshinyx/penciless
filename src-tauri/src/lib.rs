@@ -107,6 +107,11 @@ fn apply_window_composition(hwnd: isize) {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            if let Some(win) = app.get_webview_window("main") {
+                let _ = win.set_focus();
+            }
+        }))
         .setup(|app| {
             start_alt_monitor(app.handle().clone());
 
@@ -123,7 +128,7 @@ pub fn run() {
 
             TrayIconBuilder::with_id("main")
                 .menu(&menu)
-                .menu_on_left_click(false)
+                .show_menu_on_left_click(false)
                 .icon(tray_icon())
                 .tooltip("penciless")
                 .on_tray_icon_event(|tray, event| {
@@ -134,7 +139,6 @@ pub fn run() {
                     } = event
                     {
                         if let Some(win) = tray.app_handle().get_webview_window("main") {
-                            let _ = win.set_focus();
                             let _ = win.emit("toggle-annotating", ());
                         }
                     }
