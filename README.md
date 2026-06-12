@@ -62,7 +62,7 @@ Settings are stored in `localStorage` and synced to the overlay in real time via
 
 ## Installation
 
-Download the latest installer from the [Releases](https://github.com/euxora/penciless/releases) page and run it.
+Download the latest installer from the [Releases](https://github.com/joshinyx/penciless/releases) page and run it.
 
 ---
 
@@ -75,7 +75,7 @@ Download the latest installer from the [Releases](https://github.com/euxora/penc
 - [Tauri CLI prerequisites for Windows](https://v2.tauri.app/start/prerequisites/)
 
 ```bash
-git clone https://github.com/euxora/penciless.git
+git clone https://github.com/joshinyx/penciless.git
 cd penciless
 npm install
 
@@ -110,4 +110,4 @@ GPL-3.0
 
 ## About
 
-Built by [Josh Bernal](https://joshiny.dev) at [Euxora](https://euxora.net).
+Built by [Josh Bernal](https://joshiny.dev).
