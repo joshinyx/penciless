@@ -2,7 +2,7 @@
 name = "penciless"
 version = "1.1.1"
 description = "Screen annotation overlay"
-authors = ["Euxora Studio"]
+authors = ["Josh Bernal"]
 edition = "2021"
 rust-version = "1.77.2"
 default-run = "penciless"
